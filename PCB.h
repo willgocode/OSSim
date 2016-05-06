@@ -6,7 +6,7 @@ using namespace std;
 
 class PCB{
     public:
-        PCB(unsigned int pSize = 0, int aPriority = 0) : 
+        PCB(unsigned int pSize = 0, int aPriority = 99999) : 
 			processID(0), processSize(pSize), memBegin(0), memEnd(0), 
 			priority(aPriority), fileName(""), fileSize(0), status("waiting"){};
 

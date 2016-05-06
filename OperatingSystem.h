@@ -12,7 +12,7 @@ using namespace std;
 class OperatingSystem{
     public:
         OperatingSystem(int printers = 0, int disks = 0, unsigned int memory = 0)
-            :numberOfPrinters(printers), numberOfDisks(disks),
+            :numberOfProcesses(0), numberOfPrinters(printers), numberOfDisks(disks),
             memInBytes(memory), inEnvironment(true){
                 diskList.resize(disks);
                 printerList.resize(printers);
@@ -23,7 +23,6 @@ class OperatingSystem{
         void insertDiskTask(int diskPosition, string fileName,
                 unsigned int fileSize, PCB newPCB);
 		
-		void insertProcess(PCB newPCB);
         bool validInput(string userInput);
         bool validSnapshotInput(char userSnapshotInput);
         void printPrinterQueue();
@@ -33,6 +32,7 @@ class OperatingSystem{
         vector<Disk> diskList;
         vector<Printer> printerList;
 		CPU processor;
+		int numberOfProcesses;
 		int numberOfPrinters;
         int numberOfDisks;
         unsigned int memInBytes;

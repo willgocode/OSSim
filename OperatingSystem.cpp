@@ -5,6 +5,7 @@
 #include <vector>
 #include "OperatingSystem.h"
 #include "helpers.h"
+#include "PCB.h"
 
 using namespace std;
 
@@ -47,10 +48,6 @@ void OperatingSystem::insertDiskTask(int diskPosition, string fileName,
     diskList[diskPosition].pushToQueue(newPCB);
 }
 
-void OperatingSystem::insertProcess(PCB newPCB){
-	processor.addToCPUQueue(newPCB);
-}
-
 void OperatingSystem::printPrinterQueue(){
     for(int i = 0; i < numberOfPrinters ; ++i){
         if(!printerList[i].isEmpty()){
@@ -78,17 +75,11 @@ void OperatingSystem::bootOS(){
 		}	
 		
 		if(command == "A"){
-			unsigned int tempSize;
-			cout << "Adding process:" << endl;
-			cout << "Enter size of program: " ;
-			
-			//Insert mem check here
+			cout << "Adding new process: " << endl;
+			processor.addToCPUQueue();
+			numberOfProcesses++;
 		}
-		
-		else if(command == "S"){
-			cout << "Snapshot mode: " << endl;
-		}
-		
+				
 		else if(command[0] == 'd'){
 			cout << "Moving process to disk queue." << endl;
 		}
@@ -98,7 +89,16 @@ void OperatingSystem::bootOS(){
 		}
 
 		else if(command == "t"){
-			cout << "Terminating process." << endl;
+			if(numberOfProcesses > 0){
+				processor.terminateRunning();
+			}
+			else{
+				cout << "There is no process running." << endl;
+			}
+		}
+
+		else if(command == "S"){
+			cout << "Snapshot mode: " << endl;
 		}
 	}
 }

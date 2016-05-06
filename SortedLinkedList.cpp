@@ -12,13 +12,13 @@ using namespace std;
 template<class T, class Comparator>
 void SortedLinkedList<T, Comparator>::display() const{
     if (empty()){
-        cout << "(empty)" << endl;
+        cout << "CPU ready queue is empty." << endl;
         return;
     }
     auto it = linkedList.begin();
-    cout << it -> getProcessID();
+    cout << "PID: " << it -> getProcessID();
     for (++it; it != linkedList.end(); ++it){
-        cout << ", " << it -> getProcessID();
+        cout << ", PID: " << it -> getProcessID();
     }
     cout << endl;
 }

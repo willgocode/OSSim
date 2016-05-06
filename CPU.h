@@ -10,11 +10,13 @@ using namespace std;
 
 class CPU{
     public:
-        CPU() : nextPID(0) {}
-        void addToCPUQueue(PCB aProcess);
-        void removeFromCPUQueue();
+        CPU() : nextPID(1) {
+			inCPU[0] = PCB();
+		}
+        void addToCPUQueue();
+        void insertFromQueue();
         void printQueuedPID();
-        void runProcess();
+        void terminateRunning();
     private:
         PCB inCPU[1];
         unsigned int nextPID;
