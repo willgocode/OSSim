@@ -5,48 +5,75 @@
 #include <list>
 #include <iostream>
 #include "Comparator.h"
+#include "helpers.h"
 
 using namespace std;
 
 void Printer::printIOQueue(){
     for(list<PCB>::const_iterator ci = printerQueue.begin(); ci != printerQueue.end(); 
             ++ci){
-        cout << ci -> getPriority() << " ";
+        cout << "PID: " << ci -> getProcessID() << ", ";
     }
 	cout << endl;
 }
 
 void Printer::pushToQueue(PCB newEntry){
-    printerQueue.push_back(newEntry);
+    cin.ignore();
+	string fileName;
+	unsigned int fileSize;
+	cout << "Enter a file name: " ;
+	getline(cin, fileName);
+	newEntry.setFileName(fileName);
+
+	cout << "Enter a file size: " ;
+	cin >> fileSize;
+	inputManager(fileSize);
+	newEntry.setFileSize(fileSize);
+
+	printerQueue.push_back(newEntry);
+	totalNumberPrintTasks++;
+	if(totalNumberPrintTasks == 1){
+		getNextFromQueue();
+	}
 }
 
-PCB Printer::getTop(){
-	return printerQueue.front();
-}
-
-void Printer::removeTop(){
+void Printer::getNextFromQueue(){
+	inPrintMode[0] = printerQueue.front();
 	printerQueue.pop_front();
 }
 
 void Disk::printIOQueue(){
     for(list<PCB>::const_iterator ci = diskQueue.begin(); ci != diskQueue.end();
             ++ci){
-        cout << ci -> getPriority() << " ";
+        cout << "PID: " << ci -> getProcessID() << ", ";
 	}
 	cout << endl;
 }
 
 void Disk::pushToQueue(PCB newEntry){
-    diskQueue.push_back(newEntry);
+    cin.ignore();
+	string fileName;
+    unsigned int fileSize;
+    cout << "Enter a file name: " ;
+    getline(cin, fileName);
+    newEntry.setFileName(fileName);
+    cin.clear();
+
+    cout << "Enter a file size: " ;
+    cin >> fileSize;
+    inputManager(fileSize);
+    newEntry.setFileSize(fileSize);
+
+	diskQueue.push_back(newEntry);
+	totalNumberDiskTasks++;
+	if(totalNumberDiskTasks == 1){
+		getNextFromQueue();
+	}
 }
 
-PCB Disk::getTop(){
-	return diskQueue.front();
-}
-
-void Disk::removeTop(){
+void Disk::getNextFromQueue(){
+	inDiskMode[0] = diskQueue.front();
 	diskQueue.pop_front();
 }
-
 
 #endif

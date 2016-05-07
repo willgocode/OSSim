@@ -14,7 +14,7 @@ void CPU::addToCPUQueue(){
     int tempPriority;
 
     cin.clear();
-	cout << "Adding process:" << endl;
+	cout << "Adding process." << endl;
     cout << "Enter size of program: " ;
     cin >> tempSize;
     inputManager(tempSize);
@@ -37,12 +37,19 @@ void CPU::addToCPUQueue(){
 		cpuQueue.insert(inCPU[0]);
 		insertFromQueue();
 	}
-
+	else{
+		cout << "Currently running: " << inCPU[0].getProcessID() << endl;
+	}
 }   
 
 void CPU::insertFromQueue(){
 	inCPU[0] = cpuQueue.pop_front();
-	cout << "Now running process: " << inCPU[0].getProcessID() << endl;
+	if(inCPU[0].getProcessID() == 0){
+		cout << "Now running process: Nothing." << endl;
+	}
+	else{
+		cout << "Now running process: " << inCPU[0].getProcessID() << endl;
+	}
 }
 
 void CPU::printQueuedPID(){

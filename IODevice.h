@@ -9,31 +9,37 @@ using namespace std;
 class IODevice{
     public:
         virtual void printIOQueue() = 0;
-        virtual void pushToQueue(PCB newEntry) = 0;
-		virtual PCB getTop() = 0;
-		virtual void removeTop() = 0;
+		virtual void pushToQueue(PCB newEntry) = 0;
 		virtual bool isEmpty() = 0;
+		virtual void getNextFromQueue() = 0;
+		virtual PCB getCurrent() = 0;
 };
 
 class Printer: public IODevice{
     public:
+		Printer(): totalNumberPrintTasks(0){}
         void printIOQueue();
         void pushToQueue(PCB newEntry);
-		PCB getTop();
-		void removeTop();
 		bool isEmpty(){ return printerQueue.empty(); }
+		void getNextFromQueue();
+		PCB getCurrent() { return inPrintMode[0]; }
     private:
-        list<PCB> printerQueue;
+        int totalNumberPrintTasks;
+		PCB inPrintMode[1];
+		list<PCB> printerQueue;
 };
 
 class Disk: public IODevice{
     public:
+		Disk(): totalNumberDiskTasks(0){}
         void printIOQueue();
         void pushToQueue(PCB newEntry);
-		PCB getTop();
-		void removeTop();
 		bool isEmpty(){ return diskQueue.empty(); }
+		void getNextFromQueue();
+		PCB getCurrent(){ return inDiskMode[0]; }
 	private:
+		int totalNumberDiskTasks;
+		PCB inDiskMode[1];
         list<PCB> diskQueue;
 };
 

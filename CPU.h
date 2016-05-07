@@ -17,6 +17,7 @@ class CPU{
         void insertFromQueue();
         void printQueuedPID();
         void terminateRunning();
+		PCB getRunning(){ return inCPU[0]; }
     private:
         PCB inCPU[1];
         unsigned int nextPID;

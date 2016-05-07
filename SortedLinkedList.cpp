@@ -18,8 +18,13 @@ void SortedLinkedList<T, Comparator>::display() const{
     auto it = linkedList.begin();
     cout << "PID: " << it -> getProcessID();
     for (++it; it != linkedList.end(); ++it){
-        cout << ", PID: " << it -> getProcessID();
-    }
+        if(it -> getProcessID() == 0){
+			cout << "" << endl;
+		}
+		else{
+			cout << ", PID: " << it -> getProcessID();
+    	}
+	}
     cout << endl;
 }
 
