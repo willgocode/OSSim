@@ -2,15 +2,23 @@
 #include <iostream>
 #include "PCB.h"
 #include "Comparator.h"
+#include "MemComparator.h"
 #include "IODevice.h"
 #include "OperatingSystem.h"
 #include "SortedLinkedList.h"
 #include "CPU.h"
 #include "helpers.h"
+#include "Memory.h"
 
 using namespace std;
 
-int main(){/*
+int main(){
+	CPU processor(1000);
+	
+	for(int i = 0; i < 3; i++){
+		processor.addToCPUQueue();
+	}
+/*
 	int numberOfPrinters, numberOfDisks;
 	unsigned int memInBytes;
 	
@@ -25,9 +33,9 @@ int main(){/*
 	cout << "Enter total memory in bytes: " ;
 	cin >> memInBytes;
 	inputManager(memInBytes);
-*/
+
 	OperatingSystem myOS(3, 3, 100000);
 	myOS.bootOS();
-
+*/
 	return 0;
 }

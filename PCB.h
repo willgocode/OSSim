@@ -12,8 +12,8 @@ class PCB{
 
         int getProcessID() const { return processID; }
         unsigned int getProcessSize() const { return processSize; }
-        int getMemBegin() const { return memBegin; }
-        int getMemEnd() const { return memEnd; }
+        unsigned int getMemBegin() const { return memBegin; }
+        unsigned int getMemEnd() const { return memEnd; }
         int getPriority() const { return priority; }
 		string getStatus() const { return status; }
 
@@ -24,7 +24,11 @@ class PCB{
 		void setFileSize(unsigned int newSize) { fileSize = newSize; }
 		string getFileName() const { return fileName; }
 		unsigned int getFileSize() const { return fileSize; }
-    private:
+
+		void setMemBegin(unsigned int newPoint) { memBegin = newPoint; }
+		void setMemEnd(unsigned int newPoint) { memEnd = newPoint; }
+
+	private:
 		int processID;
         int processSize;
         unsigned int memBegin;

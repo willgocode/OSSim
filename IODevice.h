@@ -23,7 +23,7 @@ class Printer: public IODevice{
 		bool isEmpty(){ return printerQueue.empty(); }
 		void getNextFromQueue();
 		PCB getCurrent() { return inPrintMode[0]; }
-    private:
+	private:
         int totalNumberPrintTasks;
 		PCB inPrintMode[1];
 		list<PCB> printerQueue;

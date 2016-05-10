@@ -12,9 +12,9 @@ using namespace std;
 void Printer::printIOQueue(){
     for(list<PCB>::const_iterator ci = printerQueue.begin(); ci != printerQueue.end(); 
             ++ci){
-        cout << "PID: " << ci -> getProcessID() << ", ";
-    }
-	cout << endl;
+        cout << "PID: " << ci -> getProcessID() << ", File Name: " << 
+			ci -> getFileName() << ", File Size: " << ci -> getFileSize() << endl;
+	}
 }
 
 void Printer::pushToQueue(PCB newEntry){
@@ -45,9 +45,9 @@ void Printer::getNextFromQueue(){
 void Disk::printIOQueue(){
     for(list<PCB>::const_iterator ci = diskQueue.begin(); ci != diskQueue.end();
             ++ci){
-        cout << "PID: " << ci -> getProcessID() << ", ";
+        cout << "PID: " << ci -> getProcessID() << ", File Name: " << 
+			ci -> getFileName() << ", File Size: " << ci -> getFileSize() << endl;
 	}
-	cout << endl;
 }
 
 void Disk::pushToQueue(PCB newEntry){

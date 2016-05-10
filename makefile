@@ -3,7 +3,7 @@ LFLAGS = -std=c++11
 CFLAGS = -c -Wall
 
 EXECUTABLE_NAME = main
-SOURCES = main.cpp CPU.cpp IODevice.cpp SortedLinkedList.cpp OperatingSystem.cpp
+SOURCES = main.cpp CPU.cpp IODevice.cpp SortedLinkedList.cpp OperatingSystem.cpp Memory.cpp
 
 OBJECTS = $(SOURCES:.cpp=.o)
 

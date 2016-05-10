@@ -6,6 +6,7 @@
 #include "SortedLinkedList.h"
 #include "CPU.h"
 #include "helpers.h"
+#include "GapBlock.h"
 
 using namespace std;
 
@@ -19,33 +20,40 @@ void CPU::addToCPUQueue(){
     cin >> tempSize;
     inputManager(tempSize);
     
-	//Insert mem check here
-    
-	cin.clear();
-	cout << "Enter priority of program: ";
-	cin >> tempPriority;
-	inputManager(tempPriority);
-	cin.clear();
-	
-	PCB aProcess(tempSize, tempPriority);
-	aProcess.setProcessID(nextPID);
-    nextPID++;
-    cpuQueue.insert(aProcess);
+	GapBlock tempBlock = memList.getLargest();
+	if(memList.insertToMem(tempSize)){	
+		cin.clear();
+		cout << "Enter priority of program: ";
+		cin >> tempPriority;
+		inputManager(tempPriority);
+		cin.clear();
+		
+		PCB aProcess(tempSize, tempPriority);
+		aProcess.setMemBegin(tempBlock.getBegin());
+		aProcess.setMemEnd(tempSize-1);
+		aProcess.setProcessID(nextPID);
+		nextPID++;
+		cpuQueue.insert(aProcess);
 
-	cout << "New process added to CPU Queue." << endl;
-	if(cpuQueue.front().getPriority() < inCPU[0].getPriority()){
-		cpuQueue.insert(inCPU[0]);
-		insertFromQueue();
-	}
-	else{
-		cout << "Currently running: " << inCPU[0].getProcessID() << endl;
+		cout << "New process added to CPU Queue." << endl;
+		if(cpuQueue.front().getPriority() < inCPU[0].getPriority()){
+			cpuQueue.insert(inCPU[0]);
+			insertFromQueue();
+		}
+		else{
+			cout << "Currently running: " << inCPU[0].getProcessID() << endl;
+		}
 	}
 }   
+
+void CPU::insertToCPUQueue(PCB newPCB){
+	cpuQueue.insert(newPCB);
+}
 
 void CPU::insertFromQueue(){
 	inCPU[0] = cpuQueue.pop_front();
 	if(inCPU[0].getProcessID() == 0){
-		cout << "Now running process: Nothing." << endl;
+		cout << "Now running process: Noq	thing." << endl;
 	}
 	else{
 		cout << "Now running process: " << inCPU[0].getProcessID() << endl;
@@ -58,6 +66,10 @@ void CPU::printQueuedPID(){
 
 void CPU::terminateRunning(){
 	cout << "Terminating process: " << inCPU[0].getProcessID() << endl;
+	unsigned int begin = inCPU[0].getMemBegin();
+	unsigned int end = inCPU[0].getMemEnd();
+	unsigned int size = end - begin;
+	GapBlock newBlock(begin, end, size);
 	inCPU[0] = NULL;
 	insertFromQueue();
 }

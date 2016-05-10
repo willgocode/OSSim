@@ -5,15 +5,18 @@
 #include "SortedLinkedList.h"
 #include "PCB.h"
 #include "Comparator.h"
+#include "Memory.h"
+#include "GapBlock.h"
 
 using namespace std;
 
 class CPU{
     public:
-        CPU() : nextPID(1) {
+        CPU(unsigned int memSize) : nextPID(1), memList(memSize) {
 			inCPU[0] = PCB();
 		}
         void addToCPUQueue();
+		void insertToCPUQueue(PCB newPCB);
         void insertFromQueue();
         void printQueuedPID();
         void terminateRunning();
@@ -22,6 +25,7 @@ class CPU{
         PCB inCPU[1];
         unsigned int nextPID;
         SortedLinkedList<PCB, Comparator<PCB>> cpuQueue;                
+		Memory memList;
 };
 
 #endif

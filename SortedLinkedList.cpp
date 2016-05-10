@@ -29,6 +29,24 @@ void SortedLinkedList<T, Comparator>::display() const{
 }
 
 template<class T, class Comparator>
+void SortedLinkedList<T, Comparator>::displayMem() const{
+    if (empty()){
+        cout << "Memory is empty." << endl;
+        return;
+    }
+    auto it = linkedList.begin();
+	cout << "Gap begin: " << it -> getBegin();
+	cout << ", Gap end: " << it -> getEnd();
+    cout << endl;
+	for (++it; it != linkedList.end(); ++it){
+		cout << "Gap begin: " << it -> getBegin();
+		cout << ", Gap end: " << it -> getEnd();
+		cout << endl;
+	}
+    cout << endl;
+}
+
+template<class T, class Comparator>
 void SortedLinkedList<T, Comparator>::insert(const T& data){
     if (empty()){
         linkedList.push_front(data);
