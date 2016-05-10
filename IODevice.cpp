@@ -42,6 +42,27 @@ void Printer::getNextFromQueue(){
 	printerQueue.pop_front();
 }
 
+void Printer::displayMemStruct(){
+	if(totalNumberPrintTasks != 0){
+		cout << "Process " << inPrintMode[0].getProcessID() << " begins at position: " 
+			<< inPrintMode[0].getMemBegin() << ", and ends at position: " 
+			<< inPrintMode[0].getMemEnd() << 
+			". Process size is: " << inPrintMode[0].getProcessSize() << "." << endl;
+	}
+	else{
+		cout << "Print queue empty." << endl;
+		return;
+	}
+	for(auto it = printerQueue.begin(); it != printerQueue.end() && 
+			it -> getProcessID() != 0 ; it++){
+		cout << "Process " << it -> getProcessID() << " begins at position: " 
+        << it -> getMemBegin() << ", and ends at position: " 
+        << it -> getMemEnd() <<
+        ". Process size is: " << it -> getProcessSize() << "." << endl;
+	}
+	cout << endl;
+}
+
 void Disk::printIOQueue(){
     for(list<PCB>::const_iterator ci = diskQueue.begin(); ci != diskQueue.end();
             ++ci){
@@ -76,4 +97,24 @@ void Disk::getNextFromQueue(){
 	diskQueue.pop_front();
 }
 
+void Disk::displayMemStruct(){
+	if(totalNumberDiskTasks != 0){
+		cout << "Process " << inDiskMode[0].getProcessID() << " begins at position: " 
+			<< inDiskMode[0].getMemBegin() << ", and ends at position: " 
+			<< inDiskMode[0].getMemEnd() << 
+			". Process size is: " << inDiskMode[0].getProcessSize() << "." << endl;
+	}
+	else{
+		cout << "Disk list empty." << endl;
+		return;
+	}
+	for(auto it = diskQueue.begin(); it != diskQueue.end() && it -> getProcessID() != 0; 
+			it++){
+		cout << "Process " << it -> getProcessID() << " begins at position: " 
+        << it -> getMemBegin() << ", and ends at position: " 
+        << it -> getMemEnd() << ". Process size is: " << 
+		it -> getProcessSize() << "." << endl;
+	}
+	cout << endl;
+}
 #endif

@@ -5,6 +5,7 @@
 //OBTAINED FROM CSCI 235 CLASS BY SIMON AYZMAN
 
 #include "SortedLinkedList.h"
+#include "GapBlock.h"
 #include <iostream>
 
 using namespace std;
@@ -37,13 +38,14 @@ void SortedLinkedList<T, Comparator>::displayMem() const{
     auto it = linkedList.begin();
 	cout << "Gap begin: " << it -> getBegin();
 	cout << ", Gap end: " << it -> getEnd();
-    cout << endl;
+	cout << ", Size: " << it -> getSize();
+	cout << endl;
 	for (++it; it != linkedList.end(); ++it){
 		cout << "Gap begin: " << it -> getBegin();
 		cout << ", Gap end: " << it -> getEnd();
+		cout << ", Size: " << it -> getSize();
 		cout << endl;
 	}
-    cout << endl;
 }
 
 template<class T, class Comparator>
@@ -65,4 +67,35 @@ void SortedLinkedList<T, Comparator>::insert(const T& data){
     }
 }
 
+template<class T, class Comparator>
+bool SortedLinkedList<T, Comparator>::insertGap(GapBlock newBlock){
+	bool tailMerged, headMerged = false;
+	for(auto it = linkedList.begin(); it != linkedList.end(); it++){
+		if(it -> getEnd() + 1 == newBlock.getBegin()){
+			it -> setBlockEnd(newBlock.getEnd());
+			headMerged = true;
+		}
+		if(it -> getBegin() == newBlock.getEnd() + 1){
+			it -> setBlockBegin(newBlock.getBegin());
+			tailMerged = true;
+		}
+	}
+	if(tailMerged || headMerged){
+		return true;
+	}
+	else{
+		return false;
+	}
+}
+
+template<class T, class Comparator>
+void SortedLinkedList<T, Comparator>::displayMemStructure(){
+	for(auto it = linkedList.begin(); it != linkedList.end() && it -> getProcessID() != 0; 
+			it++){
+		cout << "Process " << it -> getProcessID() << " begins at position: "
+        << it -> getMemBegin() << ", and ends at position: "
+        << it -> getMemEnd() << ". Process size is: " << 
+		it -> getProcessSize() << "." << endl;
+    }
+}
 #endif

@@ -7,6 +7,7 @@
 #include <iostream>
 #include <list>
 #include <algorithm>
+#include "GapBlock.h"
 
 using namespace std;
 
@@ -29,14 +30,17 @@ class SortedLinkedList{
 		void display() const;
 		void displayMem() const;
 		void clear() { linkedList.clear(); }
+
 		T& at(unsigned int pos) { auto it = linkedList.begin(); 
 			advance(it,pos); return *it; }
 		const T& at(unsigned int pos) const { auto it = linkedList.begin(); 
 			advance(it,pos); return *it; }
 		void insert(const T& data);
-		//bool insertToMem(unsigned int pSize);
 		T& remove(unsigned int pos) { auto it = linkedList.begin();
 			advance(it,pos); T& data = *it; linkedList.erase(it); return data; }
+		
+		bool insertGap(GapBlock newBlock);
+		void displayMemStructure();
 	private:
 		list<T> linkedList;
 };

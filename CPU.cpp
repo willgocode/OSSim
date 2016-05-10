@@ -30,7 +30,7 @@ void CPU::addToCPUQueue(){
 		
 		PCB aProcess(tempSize, tempPriority);
 		aProcess.setMemBegin(tempBlock.getBegin());
-		aProcess.setMemEnd(tempSize-1);
+		aProcess.setMemEnd(tempSize-1 + tempBlock.getBegin());
 		aProcess.setProcessID(nextPID);
 		nextPID++;
 		cpuQueue.insert(aProcess);
@@ -53,7 +53,7 @@ void CPU::insertToCPUQueue(PCB newPCB){
 void CPU::insertFromQueue(){
 	inCPU[0] = cpuQueue.pop_front();
 	if(inCPU[0].getProcessID() == 0){
-		cout << "Now running process: Noq	thing." << endl;
+		cout << "Now running process: Nothing." << endl;
 	}
 	else{
 		cout << "Now running process: " << inCPU[0].getProcessID() << endl;
@@ -68,9 +68,20 @@ void CPU::terminateRunning(){
 	cout << "Terminating process: " << inCPU[0].getProcessID() << endl;
 	unsigned int begin = inCPU[0].getMemBegin();
 	unsigned int end = inCPU[0].getMemEnd();
-	unsigned int size = end - begin;
+	unsigned int size = inCPU[0].getProcessSize();
+
 	GapBlock newBlock(begin, end, size);
+	memList.insertGapList(newBlock);
+
 	inCPU[0] = NULL;
 	insertFromQueue();
+}
+
+void CPU::displayMemStructure(){
+	cout << "Process " << inCPU[0].getProcessID() << " begins at position: "
+        << inCPU[0].getMemBegin() << ", and ends at position: "
+        << inCPU[0].getMemEnd() <<
+        ". Process size is: " << inCPU[0].getProcessSize() << "." << endl;
+	cpuQueue.displayMemStructure();
 }
 #endif

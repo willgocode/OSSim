@@ -21,7 +21,9 @@ class CPU{
         void printQueuedPID();
         void terminateRunning();
 		PCB getRunning(){ return inCPU[0]; }
-    private:
+		void displayMem(){ memList.displayMem(); }
+		void displayMemStructure();
+	private:
         PCB inCPU[1];
         unsigned int nextPID;
         SortedLinkedList<PCB, Comparator<PCB>> cpuQueue;                

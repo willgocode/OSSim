@@ -13,6 +13,7 @@ class IODevice{
 		virtual bool isEmpty() = 0;
 		virtual void getNextFromQueue() = 0;
 		virtual PCB getCurrent() = 0;
+		virtual void displayMemStruct() = 0;
 };
 
 class Printer: public IODevice{
@@ -23,6 +24,7 @@ class Printer: public IODevice{
 		bool isEmpty(){ return printerQueue.empty(); }
 		void getNextFromQueue();
 		PCB getCurrent() { return inPrintMode[0]; }
+		void displayMemStruct();
 	private:
         int totalNumberPrintTasks;
 		PCB inPrintMode[1];
@@ -37,6 +39,7 @@ class Disk: public IODevice{
 		bool isEmpty(){ return diskQueue.empty(); }
 		void getNextFromQueue();
 		PCB getCurrent(){ return inDiskMode[0]; }
+		void displayMemStruct();
 	private:
 		int totalNumberDiskTasks;
 		PCB inDiskMode[1];

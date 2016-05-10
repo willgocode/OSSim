@@ -19,7 +19,7 @@ class Memory{
         bool insertToMem(unsigned int processSize);
         void displayMem() { gapList.displayMem(); }
         bool removeFromMem();
-		unsigned int getBeginning();
+		void insertGapList(GapBlock newBlock);
 	private:
         SortedLinkedList<GapBlock, MemComparator<GapBlock>> gapList;
         int itemsInMem;

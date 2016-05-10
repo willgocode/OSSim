@@ -163,7 +163,6 @@ void OperatingSystem::bootOS(){
 			}
 		}
 
-
 		else if(command == "S"){ 
 			char snapCommand;
 			cout << "Snapshot mode." << endl << "Enter a command: " ;
@@ -184,6 +183,19 @@ void OperatingSystem::bootOS(){
 			}
 			else if(snapCommand == 'm'){
 				cout << "Printing memory status: " << endl;
+				cout << "Memory is empty in the following: ";
+				processor.displayMem();
+				cout << endl;
+				cout << "Tasks in processor: " << endl;
+				processor.displayMemStructure();
+				cout << "Tasks in printers: " << endl;
+				for(int i = 0; i < numberOfPrinters; i++){
+					printerList[i].displayMemStruct();
+				}
+				cout << "Tasks in disks: " << endl;
+				for(int i = 0; i < numberOfDisks; i++){
+					diskList[i].displayMemStruct();
+				}
 			}
 		}
 	}
