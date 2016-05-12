@@ -6,6 +6,7 @@
 #include "SortedLinkedList.h"
 #include "CPU.h"
 #include "helpers.h"
+#include "Memory.h"
 
 using namespace std;
 
@@ -19,18 +20,20 @@ void CPU::addToCPUQueue(){
     cin >> tempSize;
     inputManager(tempSize);
 
-	cin.clear();
-	cout << "Enter priority of program: ";
-	cin >> tempPriority;
-	inputManager(tempPriority);
-	cin.clear();
-	
-	PCB aProcess(tempSize, tempPriority);
-	aProcess.setProcessID(nextPID);
-	nextPID++;
-	cpuQueue.insert(aProcess);
+	if(mainMemory.insertProcess(nextPID, tempSize)){
+		cin.clear();
+		cout << "Enter priority of program: ";
+		cin >> tempPriority;
+		inputManager(tempPriority);
+		cin.clear();
+		
+		PCB aProcess(tempSize, tempPriority);
+		aProcess.setProcessID(nextPID);
+		nextPID++;
+		cpuQueue.insert(aProcess);
 
-	cout << "New process added to CPU Queue." << endl;
+		cout << "New process added to CPU Queue." << endl;
+	}	
 	if(cpuQueue.front().getPriority() < inCPU[0].getPriority()){
 		cpuQueue.insert(inCPU[0]);
 		insertFromQueue();
@@ -60,6 +63,7 @@ void CPU::printQueuedPID(){
 
 void CPU::terminateRunning(){
 	cout << "Terminating process: " << inCPU[0].getProcessID() << endl;
+	mainMemory.removeProcess(inCPU[0].getProcessID());
 	inCPU[0] = NULL;
 	insertFromQueue();
 }

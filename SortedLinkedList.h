@@ -7,6 +7,7 @@
 #include <iostream>
 #include <list>
 #include <algorithm>
+#include "MemComparator.h"
 
 using namespace std;
 
@@ -37,6 +38,9 @@ class SortedLinkedList{
 		void insert(const T& data);
 		T& remove(unsigned int pos) { auto it = linkedList.begin();
 			advance(it,pos); T& data = *it; linkedList.erase(it); return data; }
+		
+		void removeProcess(int pid, unsigned int memSize);
+		bool memInsert(T &newData, unsigned int maxMem);
 	private:
 		list<T> linkedList;
 };

@@ -7,6 +7,7 @@
 #include "SortedLinkedList.h"
 #include "CPU.h"
 #include "helpers.h"
+#include "Memory.h"
 
 using namespace std;
 
@@ -32,3 +33,4 @@ int main(){
 
 	return 0;
 }
+

@@ -16,8 +16,8 @@ void SortedLinkedList<T, Comparator>::display() const{
         return;
     }
     auto it = linkedList.begin();
-    cout << "PID: " << it -> getProcessID();
-    for (++it; it != linkedList.end(); ++it){
+	cout << "PID: " << it -> getProcessID();
+	for (++it; it != linkedList.end(); ++it){
         if(it -> getProcessID() == 0){
 			cout << "" << endl;
 		}
@@ -47,4 +47,61 @@ void SortedLinkedList<T, Comparator>::insert(const T& data){
     }
 }
 
+template<class T, class Comparator>
+void SortedLinkedList<T, Comparator>::displayMem() const {
+	if(linkedList.empty()){
+		cout << "Nothing in memory. " << endl;
+		return;
+	}
+	auto it = linkedList.begin();
+	if(it -> getProcessID() != 0){
+		cout << "PID: " << it -> getProcessID() << " Begins from: " << it -> getBegin()
+			<< " to: " << it -> getEnd() << endl;
+	}
+	for(++it; it != linkedList.end() && it -> getProcessID() != 0; ++it){
+		cout << "PID: " << it -> getProcessID() << " Begins from: " << it -> getBegin() 
+			<< " to: " << it -> getEnd() << endl;
+	}
+}
+
+template<class T, class Comparator>
+bool SortedLinkedList<T, Comparator>::memInsert(T &newData, unsigned int maxMem){
+	for(auto it = linkedList.begin(); it != linkedList.end(); it++){
+		unsigned int gap = next(it, 1) -> getBegin() - it -> getEnd();
+		unsigned int maxGap = 0;
+		if(gap > maxGap && newData.getSize() <= gap && next(it, 1) != linkedList.end()){
+			maxGap = gap;
+			newData.setBegin(it -> getEnd() + 1);
+			newData.setEnd(newData.getBegin() + newData.getSize() - 1);
+		}
+	}
+	if(newData.getEnd() == maxMem - 1){
+		linkedList.pop_back();
+	}
+	if(newData.getEnd() != 0){
+		insert(newData);
+		return true;
+	}
+	else{
+		cout << "No space in memory for process." << endl;
+	}
+	return false;
+}
+
+template<class T, class Comparator>
+void SortedLinkedList<T, Comparator>::removeProcess(int pid, unsigned int memSize){
+	for(auto it = linkedList.begin(); it != linkedList.end(); it++){
+		if(it -> getProcessID() == pid){
+			if(it == linkedList.begin()){
+				T newData(0, 0, 0, 0);
+				insert(newData);
+			}
+			if(it -> getEnd() == 99){
+				T newData(0, memSize - 1, memSize - 1, 0);
+				insert(newData);
+			}
+			linkedList.erase(it);
+		}
+	}
+}
 #endif

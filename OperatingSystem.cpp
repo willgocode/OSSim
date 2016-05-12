@@ -185,6 +185,7 @@ void OperatingSystem::bootOS(){
 			}
 			else if(snapCommand == 'm'){
 				cout << "Printing memory structure: " << endl;
+				processor.printMemory();
 			}
 		}
 	}
