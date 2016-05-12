@@ -2,13 +2,11 @@
 #include <iostream>
 #include "PCB.h"
 #include "Comparator.h"
-#include "MemComparator.h"
 #include "IODevice.h"
 #include "OperatingSystem.h"
 #include "SortedLinkedList.h"
 #include "CPU.h"
 #include "helpers.h"
-#include "Memory.h"
 
 using namespace std;
 
@@ -29,7 +27,7 @@ int main(){
 	cin >> memInBytes;
 	inputManager(memInBytes);
 */
-	OperatingSystem myOS(3, 3, 100000);
+	OperatingSystem myOS(3, 3, 100);
 	myOS.bootOS();
 
 	return 0;

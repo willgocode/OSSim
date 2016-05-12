@@ -79,6 +79,7 @@ void OperatingSystem::bootOS(){
 		if(command == "A"){
 			processor.addToCPUQueue();
 			numberOfProcesses++;
+			numberInCPU;
 		}
 				
 		else if(command[0] == 'd' && isdigit(command[1])){
@@ -93,7 +94,7 @@ void OperatingSystem::bootOS(){
 				else{
 					diskList[whichDisk - 1].pushToQueue(processor.getRunning());
 					cout << "Moving current process to disk queue." << endl;
-					numberOfProcesses--;
+					numberInCPU--;
 					processor.insertFromQueue();
 				}
 			}
@@ -112,7 +113,7 @@ void OperatingSystem::bootOS(){
 				else{
 					printerList[whichPrint - 1].pushToQueue(processor.getRunning());
 					cout << "Moving current process to printer queue." << endl;
-					numberOfProcesses--;
+					numberInCPU--;
 					processor.insertFromQueue();
 				}
 			}
@@ -125,6 +126,7 @@ void OperatingSystem::bootOS(){
 			else{
 				cout << "There is no process running." << endl;
 			}
+			numberOfProcesses--;
 		}
 
 		else if(command[0] == 'P' && isdigit(command[1])){
@@ -182,20 +184,7 @@ void OperatingSystem::bootOS(){
 				cout << endl;
 			}
 			else if(snapCommand == 'm'){
-				cout << "Printing memory status: " << endl;
-				cout << "Memory is empty in the following: ";
-				processor.displayMem();
-				cout << endl;
-				cout << "Tasks in processor: " << endl;
-				processor.displayMemStructure();
-				cout << "Tasks in printers: " << endl;
-				for(int i = 0; i < numberOfPrinters; i++){
-					printerList[i].displayMemStruct();
-				}
-				cout << "Tasks in disks: " << endl;
-				for(int i = 0; i < numberOfDisks; i++){
-					diskList[i].displayMemStruct();
-				}
+				cout << "Printing memory structure: " << endl;
 			}
 		}
 	}

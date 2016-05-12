@@ -32,6 +32,7 @@ class OperatingSystem{
         vector<Disk> diskList;
         vector<Printer> printerList;
 		CPU processor;
+		int numberInCPU;
 		int numberOfProcesses;
 		int numberOfPrinters;
         int numberOfDisks;

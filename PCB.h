@@ -12,7 +12,8 @@ class PCB{
 
         int getProcessID() const { return processID; }
         unsigned int getProcessSize() const { return processSize; }
-        unsigned int getMemBegin() const { return memBegin; }
+        void setProcessSize(unsigned int newSize) { processSize = newSize; }
+		unsigned int getMemBegin() const { return memBegin; }
         unsigned int getMemEnd() const { return memEnd; }
         int getPriority() const { return priority; }
 		string getStatus() const { return status; }
