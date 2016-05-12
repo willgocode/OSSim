@@ -49,11 +49,10 @@ void SortedLinkedList<T, Comparator>::insert(const T& data){
 
 template<class T, class Comparator>
 void SortedLinkedList<T, Comparator>::displayMem() const {
-	if(linkedList.empty()){
-		cout << "Nothing in memory. " << endl;
-		return;
-	}
 	auto it = linkedList.begin();
+	if(it -> getProcessID() == 0 && next(it, 1) -> getProcessID() == 0){
+		cout << "Memory is empty." << endl;
+	}
 	if(it -> getProcessID() != 0){
 		cout << "PID: " << it -> getProcessID() << " Begins from: " << it -> getBegin()
 			<< " to: " << it -> getEnd() << endl;

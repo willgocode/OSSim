@@ -14,7 +14,7 @@ class OperatingSystem{
     public:
         OperatingSystem(int printers = 0, int disks = 0, unsigned int memory = 0) : 
 			processor(memory), numberOfProcesses(0), numberOfPrinters(printers), 
-			numberOfDisks(disks), memInBytes(memory), inEnvironment(true){
+			numberOfDisks(disks), inEnvironment(true){
                 diskList.resize(disks);
                 printerList.resize(printers);
             };
@@ -37,7 +37,6 @@ class OperatingSystem{
 		int numberOfProcesses;
 		int numberOfPrinters;
         int numberOfDisks;
-        unsigned int memInBytes;
 		bool inEnvironment;
 };
 

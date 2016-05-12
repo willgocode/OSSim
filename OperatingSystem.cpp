@@ -79,7 +79,7 @@ void OperatingSystem::bootOS(){
 		if(command == "A"){
 			processor.addToCPUQueue();
 			numberOfProcesses++;
-			numberInCPU;
+			numberInCPU++;
 		}
 				
 		else if(command[0] == 'd' && isdigit(command[1])){
@@ -126,6 +126,7 @@ void OperatingSystem::bootOS(){
 			else{
 				cout << "There is no process running." << endl;
 			}
+			numberInCPU--;
 			numberOfProcesses--;
 		}
 

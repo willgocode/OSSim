@@ -14,6 +14,7 @@ class CPU{
         CPU(unsigned int memSize) : nextPID(1), mainMemory(memSize){
 			inCPU[0] = PCB();
 		}
+
         void addToCPUQueue();
 		void insertToCPUQueue(PCB newPCB);
         void insertFromQueue();
