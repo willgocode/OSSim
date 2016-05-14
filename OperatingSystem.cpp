@@ -83,7 +83,7 @@ void OperatingSystem::bootOS(){
 		}
 				
 		else if(command[0] == 'd' && isdigit(command[1])){
-			if(numberOfProcesses < 1){
+			if(numberInCPU < 1){
 				cout << "There is no process running." << endl;
 			}
 			else{
@@ -92,8 +92,8 @@ void OperatingSystem::bootOS(){
 					cout << "Disk does not exist." << endl;
 				}
 				else{
-					diskList[whichDisk - 1].pushToQueue(processor.getRunning());
-					cout << "Moving current process to disk queue." << endl;
+					cout << "Moving to current process to Disk " << whichDisk << endl;
+					diskList[whichDisk-1].pushToQueue(processor.getRunning());
 					numberInCPU--;
 					processor.insertFromQueue();
 				}
@@ -102,7 +102,7 @@ void OperatingSystem::bootOS(){
 
 
 		else if(command[0] == 'p' && isdigit(command[1])){
-			if(numberOfProcesses < 1){
+			if(numberInCPU < 1){
 				cout << "There is no process running." << endl;
 			}
 			else{
@@ -111,8 +111,8 @@ void OperatingSystem::bootOS(){
 					cout << "Printer does not exist." << endl;
 				}
 				else{
-					printerList[whichPrint - 1].pushToQueue(processor.getRunning());
-					cout << "Moving current process to printer queue." << endl;
+					cout << "Moving to current process to Printer " << whichPrint << endl;
+					printerList[whichPrint-1].pushToQueue(processor.getRunning());
 					numberInCPU--;
 					processor.insertFromQueue();
 				}
@@ -120,7 +120,7 @@ void OperatingSystem::bootOS(){
 		}
 
 		else if(command == "t"){
-			if(numberOfProcesses > 0){
+			if(numberInCPU > 0){
 				processor.terminateRunning();
 			}
 			else{
