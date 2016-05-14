@@ -122,12 +122,12 @@ void OperatingSystem::bootOS(){
 		else if(command == "t"){
 			if(numberInCPU > 0){
 				processor.terminateRunning();
+				numberInCPU--;
+				numberOfProcesses--;
 			}
 			else{
 				cout << "There is no process running." << endl;
 			}
-			numberInCPU--;
-			numberOfProcesses--;
 		}
 
 		else if(command[0] == 'P' && isdigit(command[1])){

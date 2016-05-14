@@ -10,7 +10,10 @@
 using namespace std;
 
 void Printer::printIOQueue(){
-    for(list<PCB>::const_iterator ci = printerQueue.begin(); ci != printerQueue.end(); 
+    cout << "PID: " << inPrintMode[0].getProcessID() << ", File Name: " << 
+		inPrintMode[0].getFileName() << ", File Size: " << inPrintMode[0].getFileSize() << endl;
+    
+	for(list<PCB>::const_iterator ci = printerQueue.begin(); ci != printerQueue.end(); 
             ++ci){
         cout << "PID: " << ci -> getProcessID() << ", File Name: " << 
 			ci -> getFileName() << ", File Size: " << ci -> getFileSize() << endl;
@@ -64,7 +67,9 @@ void Printer::displayMemStruct(){
 }
 
 void Disk::printIOQueue(){
-    for(list<PCB>::const_iterator ci = diskQueue.begin(); ci != diskQueue.end();
+    cout << "PID: " << inDiskMode[0].getProcessID() << ", File Name: " << 
+		inDiskMode[0].getFileName() << ", File Size: " << inDiskMode[0].getFileSize() << endl;
+	for(list<PCB>::const_iterator ci = diskQueue.begin(); ci != diskQueue.end();
             ++ci){
         cout << "PID: " << ci -> getProcessID() << ", File Name: " << 
 			ci -> getFileName() << ", File Size: " << ci -> getFileSize() << endl;

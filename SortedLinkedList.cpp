@@ -95,7 +95,7 @@ void SortedLinkedList<T, Comparator>::removeProcess(int pid, unsigned int memSiz
 				T newData(0, 0, 0, 0);
 				insert(newData);
 			}
-			if(it -> getEnd() == 99){
+			if(it -> getEnd() == memSize - 1){
 				T newData(0, memSize - 1, memSize - 1, 0);
 				insert(newData);
 			}
