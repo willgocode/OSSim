@@ -12,7 +12,7 @@
 using namespace std;
 
 int main(){
-
+/*
 	int numberOfPrinters, numberOfDisks;
 	unsigned int memInBytes;
 	
@@ -27,8 +27,9 @@ int main(){
 	cout << "Enter total memory in bytes: " ;
 	cin >> memInBytes;
 	inputManager(memInBytes);
-
-	OperatingSystem myOS(numberOfPrinters, numberOfDisks, memInBytes);
+*/
+//	OperatingSystem myOS(numberOfPrinters, numberOfDisks, memInBytes);
+	OperatingSystem myOS(3, 3, 100);
 	myOS.bootOS();
 
 	return 0;

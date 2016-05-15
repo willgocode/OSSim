@@ -45,10 +45,17 @@ void CPU::addToCPUQueue(){
 
 void CPU::insertToCPUQueue(PCB newPCB){
 	cpuQueue.insert(newPCB);
+	if(newPCB.getProcessID() == cpuQueue.front().getProcessID()){
+		auto temp = inCPU[0];
+		insertFromQueue();
+		cpuQueue.insert(temp);
+	}
 }
 
 void CPU::insertFromQueue(){
-	inCPU[0] = cpuQueue.pop_front();
+	inCPU[0] = cpuQueue.front();
+	cpuQueue.pop_front();
+	
 	if(inCPU[0].getProcessID() == 0){
 		cout << "Now running process: Nothing." << endl;
 	}
@@ -58,14 +65,22 @@ void CPU::insertFromQueue(){
 }
 
 void CPU::printQueuedPID(){
-    cpuQueue.display();
+	if(inCPU[0].getProcessID() != 0)
+		cout << "Currently running: " << inCPU[0].getProcessID() << endl;
+	cpuQueue.display();
 }
 
 void CPU::terminateRunning(){
-	cout << "Terminating process: " << inCPU[0].getProcessID() << endl;
-	mainMemory.removeProcess(inCPU[0].getProcessID());
-	inCPU[0] = NULL;
-	insertFromQueue();
+	if(!cpuQueue.empty()){
+		cout << "Terminating process: " << inCPU[0].getProcessID() << endl;
+		mainMemory.removeProcess(inCPU[0].getProcessID());
+		insertFromQueue();
+	}
+	else{
+		cpuQueue.pop_front();
+		cout << "Now running process: Nothing." << endl;
+	}
+	return;
 }
 
 #endif

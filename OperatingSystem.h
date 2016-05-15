@@ -13,7 +13,7 @@ using namespace std;
 class OperatingSystem{
     public:
         OperatingSystem(int printers = 0, int disks = 0, unsigned int memory = 0) : 
-			processor(memory), numberOfProcesses(0), numberOfPrinters(printers), 
+			processor(memory), numberInCPU(0), numberOfProcesses(0), numberOfPrinters(printers), 
 			numberOfDisks(disks), inEnvironment(true){
                 diskList.resize(disks);
                 printerList.resize(printers);

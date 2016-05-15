@@ -50,8 +50,9 @@ void OperatingSystem::insertDiskTask(int diskPosition, string fileName,
 
 void OperatingSystem::printPrinterQueue(){
     for(int i = 0; i < numberOfPrinters ; ++i){
-        if(!printerList[i].isEmpty()){
-			cout << "Queue for Printer " << i+1 << ": ";
+		auto temp = printerList[i].getCurrent();
+        if(!printerList[i].isEmpty() || temp.getProcessID() != 0){
+			cout << "Queue for Printer " << i+1 << ": " << endl;
             printerList[i].printIOQueue();
         }
     }
@@ -59,8 +60,9 @@ void OperatingSystem::printPrinterQueue(){
 
 void OperatingSystem::printDiskQueue(){
     for(int i = 0; i < numberOfDisks ; ++i){
-        if(!diskList[i].isEmpty()){
-			cout << "Queue for Disk " << i+1 << ": ";
+		auto temp = diskList[i].getCurrent();
+        if(!diskList[i].isEmpty() || temp.getProcessID() != 0){
+			cout << "Queue for Disk " << i+1 << ": " << endl;
 			diskList[i].printIOQueue();
         }
     }
@@ -111,7 +113,7 @@ void OperatingSystem::bootOS(){
 					cout << "Printer does not exist." << endl;
 				}
 				else{
-					cout << "Moving to current process to Printer " << whichPrint << endl;
+					cout << "Moving current process to Printer " << whichPrint << endl;
 					printerList[whichPrint-1].pushToQueue(processor.getRunning());
 					numberInCPU--;
 					processor.insertFromQueue();
@@ -133,17 +135,18 @@ void OperatingSystem::bootOS(){
 		else if(command[0] == 'P' && isdigit(command[1])){
 			int whichPrint = command[1] - 48;
 			PCB tempPCB;	
-			if(whichPrint >= numberOfPrinters){
+			if(whichPrint > numberOfPrinters || whichPrint < 1){
 				cout << "Printer does not exist." << endl;
 			}
 			else{
-				tempPCB = printerList[whichPrint].getCurrent();
+				tempPCB = printerList[whichPrint-1].getCurrent();
 				if(tempPCB.getProcessID() == 0){
 					cout << "Nothing to remove. Printer queue is empty." << endl;
 				}
 				else{
-					processor.insertToCPUQueue(printerList[whichPrint].getCurrent());
-					printerList[whichPrint].getNextFromQueue();
+					processor.insertToCPUQueue(printerList[whichPrint-1].getCurrent());
+					printerList[whichPrint-1].getNextFromQueue();
+					numberInCPU++;
 				}
 			}
 		}
@@ -151,17 +154,18 @@ void OperatingSystem::bootOS(){
 		else if(command[0] == 'D' && isdigit(command[1])){
 			int whichDisk = command[1] - 48;
 			PCB tempPCB;
-			if(whichDisk >= numberOfDisks){
+			if(whichDisk > numberOfDisks || whichDisk < 1){
 				cout << "Disk does not exist." << endl;
 			}
 			else{
-				tempPCB = diskList[whichDisk].getCurrent();
+				tempPCB = diskList[whichDisk-1].getCurrent();
 				if(tempPCB.getProcessID() == 0){
 					cout << "Nothing to remove. Disk queue is empty." << endl;
 				}
 				else{
-					processor.insertToCPUQueue(diskList[whichDisk].getCurrent());
-					diskList[whichDisk].getNextFromQueue();
+					processor.insertToCPUQueue(diskList[whichDisk-1].getCurrent());
+					diskList[whichDisk-1].getNextFromQueue();
+					numberInCPU++;
 				}
 			}
 		}
@@ -175,11 +179,11 @@ void OperatingSystem::bootOS(){
 					<< endl;
 			}
 			if(snapCommand == 'r'){
-				cout << "Printing out queued processes in CPU ready queue: ";
+				cout << "Printing out queued processes in CPU ready queue: " << endl;
 				processor.printQueuedPID();
 			}
 			else if(snapCommand == 'i'){
-				cout << "Printing out all queued IO devices: " << endl;
+				cout << "Printing out all queued IO tasks: " << endl;
 				printPrinterQueue();
 				printDiskQueue();
 				cout << endl;

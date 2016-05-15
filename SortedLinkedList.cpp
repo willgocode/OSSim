@@ -1,7 +1,7 @@
 #ifndef SORTED_LINKED_LIST_CPP_
 #define SORTED_LINKED_LIST_CPP_
 
-//THIS CODE WAS OBTAIEND FROM ANOTHER RESOURCE. I DID NOT WRITE THIS.
+//THIS CODE WAS OBTAINED FROM ANOTHER RESOURCE. I DID NOT WRITE THIS.
 //OBTAINED FROM CSCI 235 CLASS BY SIMON AYZMAN
 
 #include "SortedLinkedList.h"
@@ -15,8 +15,11 @@ void SortedLinkedList<T, Comparator>::display() const{
         cout << "CPU ready queue is empty." << endl;
         return;
     }
-    auto it = linkedList.begin();
-	cout << "PID: " << it -> getProcessID();
+    cout << "In CPU ready queue: " ;
+	auto it = linkedList.begin();
+	if(it -> getProcessID() != 0){
+		cout << "PID: " << it -> getProcessID();
+	}
 	for (++it; it != linkedList.end(); ++it){
         if(it -> getProcessID() == 0){
 			cout << "" << endl;
@@ -65,9 +68,9 @@ void SortedLinkedList<T, Comparator>::displayMem() const {
 
 template<class T, class Comparator>
 bool SortedLinkedList<T, Comparator>::memInsert(T &newData, unsigned int maxMem){
+	unsigned int maxGap = 0;
 	for(auto it = linkedList.begin(); it != linkedList.end(); it++){
 		unsigned int gap = next(it, 1) -> getBegin() - it -> getEnd();
-		unsigned int maxGap = 0;
 		if(gap > maxGap && newData.getSize() <= gap && next(it, 1) != linkedList.end()){
 			maxGap = gap;
 			newData.setBegin(it -> getEnd() + 1);
@@ -92,15 +95,23 @@ void SortedLinkedList<T, Comparator>::removeProcess(int pid, unsigned int memSiz
 	for(auto it = linkedList.begin(); it != linkedList.end(); it++){
 		if(it -> getProcessID() == pid){
 			if(it == linkedList.begin()){
+				linkedList.erase(it);
 				T newData(0, 0, 0, 0);
 				insert(newData);
+				return;
 			}
-			if(it -> getEnd() == memSize - 1){
+			else if(it -> getEnd() == memSize - 1){
+				linkedList.erase(it);
 				T newData(0, memSize - 1, memSize - 1, 0);
 				insert(newData);
+				return;
 			}
-			linkedList.erase(it);
+			else{
+				linkedList.erase(it);
+				return;
+			}
 		}
 	}
+	return;
 }
 #endif
